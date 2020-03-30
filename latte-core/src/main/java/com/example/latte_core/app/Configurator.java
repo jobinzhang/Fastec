@@ -7,19 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Configurator {
-    private static final HashMap<String, Object> LATTE_CONFIGS = new HashMap<String, Object>();
+    private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<Object, Object>();
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<IconFontDescriptor>();
 
 
     private Configurator() {
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), false);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, false);
     }
 
     public static Configurator getInstance() {
         return Hold.INSTANCE;
     }
 
-    public final HashMap<String, Object> getLatteConfigs() {
+    public final HashMap<Object, Object> getLatteConfigs() {
         return LATTE_CONFIGS;
     }
 
@@ -32,11 +32,11 @@ public class Configurator {
      */
     public void config() {
         initIcons();
-        LATTE_CONFIGS.put(ConfigType.CONFIG_READY.name(), true);
+        LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
     }
 
     public final Configurator withHost(String host) {
-        LATTE_CONFIGS.put(ConfigType.API_HOST.name(), host);
+        LATTE_CONFIGS.put(ConfigKeys.API_HOST, host);
         return this;
     }
 
@@ -46,15 +46,15 @@ public class Configurator {
     }
 
     public static void checkConfiguration() {
-        boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigType.CONFIG_READY);
+        boolean isReady = (boolean) LATTE_CONFIGS.get(ConfigKeys.CONFIG_READY);
         if (!isReady) {
             throw new RuntimeException("configuration is not ready, call configurator");
         }
     }
 
-    public <T> T getConfiguration(Enum<ConfigType> key) {
+    public <T> T getConfiguration(Enum<ConfigKeys> key) {
         checkConfiguration();
-        return (T) LATTE_CONFIGS.get(key.name());
+        return (T) LATTE_CONFIGS.get(key);
     }
 
     public void initIcons() {
