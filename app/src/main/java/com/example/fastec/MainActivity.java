@@ -1,19 +1,16 @@
 package com.example.fastec;
 
+import com.example.latte_core.activities.ProxyActivity;
+import com.example.latte_core.delegates.BaseDelegate;
+import com.example.latte_ec.launcher.LauncherDelegate;
+import com.example.latte_ec.launcher.LauncherScrollDelegate;
+import com.example.latte_ec.sign.SignUpDelegate;
 
-import android.os.Bundle;
-import android.widget.Toast;
+public class MainActivity extends ProxyActivity {
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.latte_core.app.Latte;
-
-public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toast.makeText(Latte.getApplicationContext(),"show applicaiton", Toast.LENGTH_LONG).show();
+    public BaseDelegate setRootDelegate() {
+        return new SignUpDelegate();
     }
 }

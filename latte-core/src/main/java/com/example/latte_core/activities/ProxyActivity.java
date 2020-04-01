@@ -8,14 +8,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.ContentFrameLayout;
 
 import com.example.latte_core.R;
-import com.example.latte_core.delegates.LatteDelegate;
+import com.example.latte_core.delegates.BaseDelegate;
 
 import me.yokeyword.fragmentation.SupportActivity;
 
 public abstract class ProxyActivity extends SupportActivity {
 
 
-    public abstract LatteDelegate setRootDelegate();
+    public abstract BaseDelegate setRootDelegate();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

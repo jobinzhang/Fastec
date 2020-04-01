@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.latte_core.activities.ProxyActivity;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.yokeyword.fragmentation.ISupportFragment;
 import me.yokeyword.fragmentation.SupportFragment;
 
-public abstract  class BaseDelegate extends SupportFragment implements ISupportFragment {
+public abstract  class BaseDelegate extends SupportFragment {
 
     private Unbinder mUnbinder = null;
 
@@ -35,5 +36,9 @@ public abstract  class BaseDelegate extends SupportFragment implements ISupportF
         mUnbinder = ButterKnife.bind(this, rootView);
         onBindView(savedInstanceState, rootView);
         return rootView;
+    }
+
+    public ProxyActivity getProxyActivity() {
+        return (ProxyActivity) _mActivity;
     }
 }
