@@ -13,6 +13,7 @@ public class BaseApplication extends Application {
         super.onCreate();
         Latte.init(this)
                 .withIcons(new FontAwesomeModule())
+                .withHost("http://open.play.cn")
                 .config();
     }
 }

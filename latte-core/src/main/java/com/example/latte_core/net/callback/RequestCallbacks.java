@@ -7,6 +7,7 @@ import com.example.latte_core.app.Latte;
 import com.example.latte_core.net.RestCreator;
 import com.example.latte_core.ui.loader.LatteLoader;
 import com.example.latte_core.ui.loader.LoaderStyle;
+import com.example.latte_core.util.Utils;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,7 +64,8 @@ public final class RequestCallbacks implements Callback<String> {
     }
 
     private void onRequestFinish() {
-        final long delayed = Latte.getConfiguration(ConfigKeys.LOADER_DELAYED);
+
+        long delayed = Utils.toLong((String) Latte.getConfiguration(ConfigKeys.LOADER_DELAYED), 0);
         if (LOADER_STYLE != null) {
             HANDLER.postDelayed(new Runnable() {
                 @Override

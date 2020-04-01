@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.latte_core.delegates.BaseDelegate;
+import com.example.latte_core.net.RestClient;
+import com.example.latte_core.net.callback.ISuccess;
 import com.example.latte_ec.R;
 import com.example.latte_ec.R2;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,7 +29,16 @@ public class SignInDelegate extends BaseDelegate {
     public void onclickSignIn() {
         boolean isCheckOk = checkForm();
         if (isCheckOk) {
-            //TODO 登录
+            RestClient.builder().url("/api/v2/tv/game_detail.json").
+                    params("email", mEmail.getText().toString()).
+                    params("password", mPassword.getText().toString()).
+                    success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            SignHandler.onSignIn(response, null);
+                        }
+
+            }).build().get();
         }
     }
 
