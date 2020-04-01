@@ -34,7 +34,11 @@ public class SignUpDelegate extends BaseDelegate {
         if (isCheckOK) {
             // TODO 注册逻辑
         }
+    }
 
+    @OnClick(R2.id.link_sign_in)
+    public void onClickLinkSignIn() {
+        start(new SignInDelegate());
     }
 
     private boolean checkForm() {
