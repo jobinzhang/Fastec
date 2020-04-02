@@ -40,10 +40,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sign_in_mail"
+                    android:id="@+id/sign_in_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="邮箱"
+                    android:hint="账号"
                     android:inputType="textEmailAddress"/>
             </com.google.android.material.textfield.TextInputLayout>
 

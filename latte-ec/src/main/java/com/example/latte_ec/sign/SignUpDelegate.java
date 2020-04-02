@@ -1,5 +1,6 @@
 package com.example.latte_ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -27,18 +28,28 @@ public class SignUpDelegate extends BaseDelegate {
     TextInputEditText mPassword = null;
     @BindView(R2.id.sign_up_repassword)
     TextInputEditText mRePassword = null;
+    private ISignListener iSignListener;
 
     @OnClick(R2.id.btn_sign_up)
     public void onClickSignUp() {
         boolean isCheckOK = checkForm();
         if (isCheckOK) {
             // TODO 注册逻辑
+
         }
     }
 
     @OnClick(R2.id.link_sign_in)
     public void onClickLinkSignIn() {
         start(new SignInDelegate());
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            iSignListener = (ISignListener) activity;
+        }
     }
 
     private boolean checkForm() {

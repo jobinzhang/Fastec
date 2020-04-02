@@ -1,12 +1,14 @@
 package com.example.latte_ec.sign;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.latte_core.delegates.BaseDelegate;
 import com.example.latte_core.net.RestClient;
 import com.example.latte_core.net.callback.ISuccess;
@@ -20,25 +22,37 @@ import butterknife.OnClick;
 
 public class SignInDelegate extends BaseDelegate {
 
-    @BindView(R2.id.sign_in_mail)
-    TextInputEditText mEmail = null;
+    @BindView(R2.id.sign_in_name)
+    TextInputEditText mname = null;
     @BindView(R2.id.sign_in_password)
     TextInputEditText mPassword = null;
+    private String username;
+    private String password;
+    private ISignListener iSignListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener) {
+            iSignListener = (ISignListener) activity;
+        }
+    }
 
     @OnClick(R2.id.btn_sign_in)
     public void onclickSignIn() {
         boolean isCheckOk = checkForm();
         if (isCheckOk) {
-            RestClient.builder().url("/api/v2/tv/game_detail.json").
-                    params("email", mEmail.getText().toString()).
-                    params("password", mPassword.getText().toString()).
+            JSONObject body = new JSONObject();
+            body.put("username",username);
+            body.put("password",password);
+            RestClient.builder().url("/fastec/user/login").
+                   raw(body.toString()).
                     success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
-                            SignHandler.onSignIn(response, null);
+                            SignHandler.onSignIn(response, iSignListener);
                         }
-
-            }).build().get();
+            }).build().post();
         }
     }
 
@@ -48,18 +62,18 @@ public class SignInDelegate extends BaseDelegate {
     }
 
     private boolean checkForm() {
-        final String email = mEmail.getText().toString();
-        final String password = mPassword.getText().toString();
+        username = mname.getText().toString();
+        password = mPassword.getText().toString();
         boolean isPass = true;
-        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            mEmail.setError("错误的邮箱格式");
+        if (username.isEmpty()) {
+            mname.setError("用户名为空");
             isPass = false;
         } else {
-            mEmail.setError(null);
+            mname.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 6) {
-            mPassword.setError("请填写至少6位数密码");
+        if (password.isEmpty()) {
+            mPassword.setError("密码为空");
             isPass = false;
         } else {
             mPassword.setError(null);

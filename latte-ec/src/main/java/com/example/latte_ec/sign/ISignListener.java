@@ -4,5 +4,7 @@ public interface ISignListener {
 
     void onSignInSuccess();
 
+    void onSignInError();
+
     void onSignUpSuccess();
 }
