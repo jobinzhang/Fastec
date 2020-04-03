@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.latte_core.app.AccountManager;
 
 public class SignHandler {
 
@@ -16,11 +17,19 @@ public class SignHandler {
         if (user == null) {
             signListener.onSignInError();
         } else {
+            AccountManager.setSignState(true);
             signListener.onSignInSuccess();
         }
     }
 
     public static void onSignUp(String response, ISignListener signListener) {
-
+        Log.i("onSignUp", response);
+        JSONObject jsonObject = JSON.parseObject(response);
+        if (jsonObject.getIntValue("state") != 0) {
+            signListener.onSignUpFail(jsonObject.getString("message"));
+        } else {
+            // 注册成功
+            signListener.onSignUpSuccess();
+        }
     }
 }

@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.latte_core.app.AccountManager;
+import com.example.latte_core.app.IUserChecker;
 import com.example.latte_core.delegates.BaseDelegate;
 import com.example.latte_core.ui.launcher.ScrollLauncherTag;
 import com.example.latte_core.util.storage.LattePreference;
@@ -15,6 +18,7 @@ import com.example.latte_core.util.timer.BaseTimerTask;
 import com.example.latte_core.util.timer.ITimerListener;
 import com.example.latte_ec.R;
 import com.example.latte_ec.R2;
+import com.example.latte_ec.sign.SignInDelegate;
 
 import java.util.Timer;
 
@@ -35,7 +39,20 @@ public class LauncherDelegate extends BaseDelegate implements ITimerListener {
             timer.cancel();
             tvTimerView.setVisibility(View.INVISIBLE);
         }
+        // 判断是否需要轮播
         checkIsShowScroll();
+        // 判断用户是否登录
+        AccountManager.checkAccount(new IUserChecker() {
+            @Override
+            public void onSignIn() {
+                Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG);
+            }
+            @Override
+            public void onNotSignIn() {
+                // 没有登录跳转登录页面
+                getSupportDelegate().start(new SignInDelegate());
+            }
+        });
     }
 
     private void initTimer() {
@@ -78,6 +95,18 @@ public class LauncherDelegate extends BaseDelegate implements ITimerListener {
                         tvTimerView.setVisibility(View.INVISIBLE);
                         timer.cancel();
                         checkIsShowScroll();
+                        // 判断用户是否登录
+                        AccountManager.checkAccount(new IUserChecker() {
+                            @Override
+                            public void onSignIn() {
+                                Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG).show();
+                            }
+                            @Override
+                            public void onNotSignIn() {
+                                // 没有登录跳转登录页面
+                                getSupportDelegate().start(new SignInDelegate());
+                            }
+                        });
                     }
                 }
             }

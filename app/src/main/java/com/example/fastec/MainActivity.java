@@ -4,7 +4,9 @@ import android.widget.Toast;
 
 import com.example.latte_core.activities.ProxyActivity;
 import com.example.latte_core.delegates.BaseDelegate;
+import com.example.latte_ec.launcher.LauncherDelegate;
 import com.example.latte_ec.sign.ISignListener;
+import com.example.latte_ec.sign.SignInDelegate;
 import com.example.latte_ec.sign.SignUpDelegate;
 
 public class MainActivity extends ProxyActivity implements ISignListener {
@@ -12,7 +14,7 @@ public class MainActivity extends ProxyActivity implements ISignListener {
 
     @Override
     public BaseDelegate setRootDelegate() {
-        return new SignUpDelegate();
+        return new LauncherDelegate();
     }
 
     @Override
@@ -28,5 +30,12 @@ public class MainActivity extends ProxyActivity implements ISignListener {
     @Override
     public void onSignUpSuccess() {
         Toast.makeText(this, "onSignUpSuccess", Toast.LENGTH_SHORT).show();
+        // 注册成功，跳转登录页面
+        start(new SignInDelegate());
+    }
+
+    @Override
+    public void onSignUpFail(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

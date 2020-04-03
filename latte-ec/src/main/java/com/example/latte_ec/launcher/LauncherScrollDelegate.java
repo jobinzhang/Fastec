@@ -1,21 +1,22 @@
 package com.example.latte_ec.launcher;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.example.latte_core.app.AccountManager;
+import com.example.latte_core.app.IUserChecker;
 import com.example.latte_core.delegates.BaseDelegate;
 import com.example.latte_core.ui.launcher.LauncherHolderCreator;
 import com.example.latte_core.ui.launcher.ScrollLauncherTag;
 import com.example.latte_core.util.storage.LattePreference;
 import com.example.latte_ec.R;
+import com.example.latte_ec.sign.SignInDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,18 @@ public class LauncherScrollDelegate extends BaseDelegate implements OnItemClickL
         // 滑动到最后一个
         if (position == resourceIds.size() - 1) {
             LattePreference.setAppFlag(ScrollLauncherTag.HAS_LAUNCHERED_APP.name(), true);
+            // 判断用户是否登录
+            AccountManager.checkAccount(new IUserChecker() {
+                @Override
+                public void onSignIn() {
+                    Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG);
+                }
+                @Override
+                public void onNotSignIn() {
+                    // 没有登录跳转登录页面
+                    getSupportDelegate().start(new SignInDelegate());
+                }
+            });
         }
     }
 }

@@ -7,4 +7,6 @@ public interface ISignListener {
     void onSignInError();
 
     void onSignUpSuccess();
+
+    void onSignUpFail(String message);
 }

@@ -79,6 +79,14 @@
                 android:gravity="center"
                 android:text="还没账号？请注册"
                 android:textSize="16sp" />
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/wechat_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="{fa-weixin}"
+                android:textColor="@android:color/holo_green_dark"
+                android:textSize="28sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

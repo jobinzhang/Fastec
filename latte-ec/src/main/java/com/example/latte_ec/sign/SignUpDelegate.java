@@ -8,7 +8,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.latte_core.delegates.BaseDelegate;
+import com.example.latte_core.net.RestClient;
+import com.example.latte_core.net.callback.ISuccess;
 import com.example.latte_ec.R;
 import com.example.latte_ec.R2;
 import com.google.android.material.textfield.TextInputEditText;
@@ -29,12 +32,25 @@ public class SignUpDelegate extends BaseDelegate {
     @BindView(R2.id.sign_up_repassword)
     TextInputEditText mRePassword = null;
     private ISignListener iSignListener;
+    private String name;
+    private String email;
+    private String phone;
+    private String password;
+    private String rePassword;
 
     @OnClick(R2.id.btn_sign_up)
     public void onClickSignUp() {
         boolean isCheckOK = checkForm();
         if (isCheckOK) {
-            // TODO 注册逻辑
+            JSONObject registerJson = formatRegisterJson();
+            RestClient.builder().url("/fastec/user/register").
+                    raw(registerJson.toString()).
+                    success(new ISuccess() {
+                        @Override
+                        public void onSuccess(String response) {
+                            SignHandler.onSignUp(response, iSignListener);
+                        }
+                    }).build().post();
 
         }
     }
@@ -52,12 +68,21 @@ public class SignUpDelegate extends BaseDelegate {
         }
     }
 
+    private JSONObject formatRegisterJson() {
+        JSONObject register = new JSONObject();
+        register.put("username", name);
+        register.put("password",password);
+        register.put("email",email);
+        register.put("phone",phone);
+        return register;
+    }
+
     private boolean checkForm() {
-        final String name = mName.getText().toString();
-        final String email = mEmail.getText().toString();
-        final String phone = mPhone.getText().toString();
-        final String password = mPassword.getText().toString();
-        final String rePassword = mRePassword.getText().toString();
+        name = mName.getText().toString();
+        email = mEmail.getText().toString();
+        phone = mPhone.getText().toString();
+        password = mPassword.getText().toString();
+        rePassword = mRePassword.getText().toString();
 
         boolean isPass = true;
 
