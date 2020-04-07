@@ -18,6 +18,7 @@ import com.example.latte_core.util.timer.BaseTimerTask;
 import com.example.latte_core.util.timer.ITimerListener;
 import com.example.latte_ec.R;
 import com.example.latte_ec.R2;
+import com.example.latte_ec.main.EcBottomDelegate;
 import com.example.latte_ec.sign.SignInDelegate;
 
 import java.util.Timer;
@@ -46,6 +47,8 @@ public class LauncherDelegate extends BaseDelegate implements ITimerListener {
             @Override
             public void onSignIn() {
                 Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG);
+                // 登录成功跳转主页面
+                getSupportDelegate().start(new EcBottomDelegate());
             }
             @Override
             public void onNotSignIn() {
@@ -100,6 +103,8 @@ public class LauncherDelegate extends BaseDelegate implements ITimerListener {
                             @Override
                             public void onSignIn() {
                                 Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG).show();
+                                // 登录成功跳转主页面
+                                getSupportDelegate().start(new EcBottomDelegate());
                             }
                             @Override
                             public void onNotSignIn() {

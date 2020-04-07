@@ -5,6 +5,7 @@ import android.widget.Toast;
 import com.example.latte_core.activities.ProxyActivity;
 import com.example.latte_core.delegates.BaseDelegate;
 import com.example.latte_ec.launcher.LauncherDelegate;
+import com.example.latte_ec.main.EcBottomDelegate;
 import com.example.latte_ec.sign.ISignListener;
 import com.example.latte_ec.sign.SignInDelegate;
 import com.example.latte_ec.sign.SignUpDelegate;
@@ -19,7 +20,7 @@ public class MainActivity extends ProxyActivity implements ISignListener {
 
     @Override
     public void onSignInSuccess() {
-        Toast.makeText(this, "onSignInSuccess", Toast.LENGTH_SHORT).show();
+        start(new EcBottomDelegate());
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.example.latte_core.ui.launcher.LauncherHolderCreator;
 import com.example.latte_core.ui.launcher.ScrollLauncherTag;
 import com.example.latte_core.util.storage.LattePreference;
 import com.example.latte_ec.R;
+import com.example.latte_ec.main.EcBottomDelegate;
 import com.example.latte_ec.sign.SignInDelegate;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class LauncherScrollDelegate extends BaseDelegate implements OnItemClickL
                 @Override
                 public void onSignIn() {
                     Toast.makeText(getActivity(), "on signin", Toast.LENGTH_LONG);
+                    // 登录成功跳转主页面
+                    getSupportDelegate().start(new EcBottomDelegate());
                 }
                 @Override
                 public void onNotSignIn() {
