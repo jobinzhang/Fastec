@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.latte_core.R2;
 import com.example.latte_core.delegates.bottom.BottomItemDelegate;
 import com.example.latte_core.ui.recycler.BaseDecoration;
 import com.example.latte_core.ui.refresh.RefreshHandler;
@@ -21,13 +20,14 @@ import com.example.latte_core.util.callback.CallbackManager;
 import com.example.latte_core.util.callback.CallbackType;
 import com.example.latte_core.util.callback.IGlobalCallback;
 import com.example.latte_ec.R;
+import com.example.latte_ec.R2;
 import com.example.latte_ec.main.EcBottomDelegate;
+import com.example.latte_ec.main.index.search.SearchDelegate;
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class IndexDelegate extends BottomItemDelegate {
+public class IndexDelegate extends BottomItemDelegate implements View.OnFocusChangeListener {
     @BindView(R2.id.rv_index)
     RecyclerView mRecyclerView = null;
     @BindView(R2.id.srl_index)
@@ -41,10 +41,10 @@ public class IndexDelegate extends BottomItemDelegate {
 
     private RefreshHandler mRefreshHandler = null;
 
-    @OnClick(R2.id.icon_index_scan)
+/*    @OnClick(R2.id.icon_index_scan)
     void onClickScanQrCode() {
         startScanWithCheck(this.getParentDelegate());
-    }
+    }*/
 
 
     @Override

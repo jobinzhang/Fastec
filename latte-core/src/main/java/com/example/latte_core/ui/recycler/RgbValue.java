@@ -1,9 +1,5 @@
 package com.example.latte_core.ui.recycler;
 
-
-import com.google.auto.value.AutoValue;
-
-@AutoValue
 public abstract class RgbValue {
 
     public abstract int red();
